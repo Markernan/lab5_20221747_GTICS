@@ -12,5 +12,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     @Query("SELECT u FROM Usuario u ORDER BY u.nombre")
     List<Usuario> buscarTodosOrdenadosPorNombre();
 
+    @Query("SELECT u FROM Usuario u WHERE u.correo = ?1")
     Optional<Usuario> buscarPorCorreo(String correo);
 }

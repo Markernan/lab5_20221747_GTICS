@@ -18,33 +18,20 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import jakarta.validation.Valid;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Optional;
-
 @Controller
-@RequestMapping("/usuario")
+@RequestMapping("/")
 public class UsuarioController {
+
     private final UsuarioRepository usuarioRepository;
     private final MensajeRepository mensajeRepository;
     private final RankingRepository rankingRepository;
 
-    public UsuarioController(UsuarioRepository usuarioRepository, MensajeRepository mensajeRepository, RankingRepository rankingRepository) {
-
+    public UsuarioController(UsuarioRepository usuarioRepository,
+                             MensajeRepository mensajeRepository,
+                             RankingRepository rankingRepository) {
         this.usuarioRepository = usuarioRepository;
-
         this.mensajeRepository = mensajeRepository;
-
         this.rankingRepository = rankingRepository;
-    }
-
-    @GetMapping(value = {"", "/", "list"})
-    public String listarEmpleados(Model model) {
-        model.addAttribute("listaEmpleados", usuarioRepository.findAll());
-        model.addAttribute("listaEmpleadosPorRegion", usuarioRepository);
-        model.addAttribute("listaEmpleadosPorPais", usuarioRepository);
-        return "usuario/list";
     }
 
     @GetMapping(value = {"", "/"})
@@ -87,7 +74,6 @@ public class UsuarioController {
     @GetMapping("/logout")
     public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
         session.invalidate();
-
         redirectAttributes.addFlashAttribute("msg", "Sesión cerrada exitosamente");
         return "redirect:/login";
     }
@@ -156,7 +142,6 @@ public class UsuarioController {
         Usuario usuarioActivo = (Usuario) session.getAttribute("usuarioLogueado");
 
         if (usuarioActivo == null) {
-
             return "redirect:/login";
         }
 
@@ -168,12 +153,9 @@ public class UsuarioController {
         }
 
         if (bindingResult.hasErrors()) {
-
             model.addAttribute("usuarios", usuarioRepository.buscarTodosOrdenadosPorNombre());
             model.addAttribute("usuarioLogueado", usuarioActivo);
-
             return "enviar-mensaje";
-
         }
 
         Optional<Usuario> destinatarioElegido = usuarioRepository.findById(idDestinatario);
@@ -184,9 +166,7 @@ public class UsuarioController {
             mensaje.setRegaloTipo(Mensaje.TipoRegalo.valueOf(tipoRegalo));
 
             if ("Flor".equals(tipoRegalo)) {
-
                 mensaje.setRegaloColor("Amarillo");
-
             } else if ("Carrito".equals(tipoRegalo) && colorCarrito != null) {
                 mensaje.setRegaloColor(colorCarrito);
             }
@@ -205,7 +185,6 @@ public class UsuarioController {
         Usuario usuarioActivo = (Usuario) session.getAttribute("usuarioLogueado");
 
         if (usuarioActivo == null) {
-
             return "redirect:/login";
         }
 
@@ -218,12 +197,8 @@ public class UsuarioController {
 
             UsuarioRankingDto elementoRanking = new UsuarioRankingDto();
             elementoRanking.setId(usuario.getId());
-
             elementoRanking.setNombre(usuario.getNombre());
-
-
             elementoRanking.setApellido(usuario.getApellido());
-
             elementoRanking.setCorreo(usuario.getCorreo());
             elementoRanking.setDescripcion(usuario.getDescripcion());
             elementoRanking.setTotalRegalos(totalRegalos);
@@ -232,7 +207,6 @@ public class UsuarioController {
         }
 
         model.addAttribute("ranking", clasificacion);
-
         model.addAttribute("usuarioLogueado", usuarioActivo);
         return "ranking";
     }
@@ -248,14 +222,11 @@ public class UsuarioController {
         Optional<Usuario> usuarioBuscado = usuarioRepository.findById(usuarioId);
 
         if (usuarioBuscado.isPresent()) {
-
             List<Mensaje> mensajesRecibidos = mensajeRepository.obtenerMensajesPorDestinatario(usuarioId);
             Long totalMensajes = mensajeRepository.contarMensajesPorDestinatario(usuarioId);
 
             model.addAttribute("usuario", usuarioBuscado.get());
-
             model.addAttribute("mensajes", mensajesRecibidos);
-
             model.addAttribute("totalMensajes", totalMensajes);
             model.addAttribute("usuarioLogueado", usuarioActivo);
         }

@@ -6,7 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
-public interface MensajeRepository {
+public interface MensajeRepository extends JpaRepository<Mensaje, Integer> {
     @Query("SELECT m FROM Mensaje m WHERE m.destinatario.id = :usuarioId ORDER BY m.fechaEnvio DESC")
     List<Mensaje> obtenerMensajesPorDestinatario(@Param("usuarioId") int usuarioId);
 
