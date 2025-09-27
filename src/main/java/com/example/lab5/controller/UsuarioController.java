@@ -101,7 +101,7 @@ public class UsuarioController {
 
         Optional<Usuario> usuarioSeleccionado = usuarioRepository.findById(usuarioId);
 
-     
+
 
         return "mensajes-recibidos";
     }
