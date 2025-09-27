@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-public interface RankingRepository {
+public interface RankingRepository extends JpaRepository<Ranking, Integer> {
 
     @Query("SELECT r FROM Ranking r JOIN r.usuario u ORDER BY r.totalRegalos DESC")
     List<Ranking> obtenerRankingOrdenadoPorRegalos();

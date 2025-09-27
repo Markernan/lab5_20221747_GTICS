@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/base :: head}">
+    <title>Registro - Jardín de la Esperanza</title>
+</head>
+<body>
+<nav th:replace="~{fragments/base :: navbar}"></nav>
+
+<div class="container my-5" style="padding-top: 100px;">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header gradient-bg text-white text-center py-4">
+                    <h2 class="mb-0">
+                        <i class="fas fa-user-plus me-2"></i>
+                        Registro de Usuario
+                    </h2>
+                    <p class="mb-0 mt-2">Únete a nuestra comunidad de esperanza</p>
+                </div>
+
+                <div class="card-body p-5">
+                    <form th:action="@{/registro}" th:object="${usuario}" method="post">
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+
+                                <label for="nombreUsuario" class="form-label">
+
+                                    <i class="fas fa-user me-1"></i>Nombre
+                                </label>
+                                <input type="text" th:field="*{nombre}"
+                                       class="form-control" id="nombreUsuario"
+
+                                       th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid' : ''"
+                                       placeholder="Ingresa tu nombre">
+
+                                <div th:if="${#fields.hasErrors('nombre')}" class="invalid-feedback">
+                                    <span th:errors="*{nombre}"></span>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label for="apellidoUsuario" class="form-label">
+
+                                    <i class="fas fa-user me-1"></i>Apellido
+                                </label>
+                                <input type="text" th:field="*{apellido}"
+
+                                       class="form-control" id="apellidoUsuario"
+
+                                       th:classappend="${#fields.hasErrors('apellido')} ? 'is-invalid' : ''"
+                                       placeholder="Ingresa tu apellido">
+
+                                <div th:if="${#fields.hasErrors('apellido')}" class="invalid-feedback">
+                                    <span th:errors="*{apellido}"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-8">
+                                <label for="correoElectronico" class="form-label">
+
+                                    <i class="fas fa-envelope me-1"></i>Correo Electrónico
+                                </label>
+                                <input type="email" th:field="*{correo}"
+
+                                       class="form-control" id="correoElectronico"
+
+                                       th:classappend="${#fields.hasErrors('correo')} ? 'is-invalid' : ''"
+                                       placeholder="correo@ejemplo.com">
+
+                                <div th:if="${#fields.hasErrors('correo')}" class="invalid-feedback">
+                                    <span th:errors="*{correo}"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+
+                                <label for="edadUsuario" class="form-label">
+
+                                    <i class="fas fa-birthday-cake me-1"></i>Edad
+                                </label>
+                                <input type="number" th:field="*{edad}"
+                                       class="form-control" id="edadUsuario" min="18"
+                                       th:classappend="${#fields.hasErrors('edad')} ? 'is-invalid' : ''"
+                                       placeholder="18">
+
+                                <div th:if="${#fields.hasErrors('edad')}" class="invalid-feedback">
+                                    <span th:errors="*{edad}"></span>
+
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="descripcionPersonal" class="form-label">
+                                    <i class="fas fa-comment me-1"></i>Descripción Personal
+
+                                </label>
+                                <textarea th:field="*{descripcion}"
+                                          class="form-control" id="descripcionPersonal" rows="3"
+
+                                          th:classappend="${#fields.hasErrors('descripcion')} ? 'is-invalid' : ''"
+                                          placeholder="Cuéntanos un poco sobre ti (mínimo 10 caracteres)"></textarea>
+                                <div th:if="${#fields.hasErrors('descripcion')}" class="invalid-feedback">
+                                    <span th:errors="*{descripcion}"></span>
+
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="claveUsuario" class="form-label">
+
+                                    <i class="fas fa-lock me-1"></i>Contraseña
+                                </label>
+                                <input type="password" th:field="*{contrasena}"
+
+                                       class="form-control" id="claveUsuario"
+
+                                       th:classappend="${#fields.hasErrors('contrasena')} ? 'is-invalid' : ''"
+                                       placeholder="Mínimo 6 caracteres y 1 número">
+
+                                <div th:if="${#fields.hasErrors('contrasena')}" class="invalid-feedback">
+                                    <span th:errors="*{contrasena}"></span>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-custom btn-lg py-3">
+
+                                <i class="fas fa-user-plus me-2"></i>
+                                Registrarse
+                            </button>
+                            <a href="/login" class="btn btn-outline-secondary">
+
+                                <i class="fas fa-arrow-left me-2"></i>
+                                Ya tengo cuenta - Iniciar Sesión
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/base :: scripts}"></div>
+</body>
+</html>

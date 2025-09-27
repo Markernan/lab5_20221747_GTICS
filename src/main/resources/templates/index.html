@@ -8,8 +8,11 @@
 <nav th:replace="~{fragments/base :: navbar}"></nav>
 
 <div class="hero-section text-center">
+
   <div class="container">
+
     <h1 class="display-4 fw-bold mb-4">
+
       <i class="fas fa-seedling me-3"></i>
       Jardín de la Esperanza y Carritos de Amistad
     </h1>
@@ -22,9 +25,12 @@
 </div>
 
 <div class="container my-5" style="padding-top: 80px;">
+
   <div th:if="${msg}" class="alert alert-success alert-dismissible fade show" role="alert">
     <i class="fas fa-check-circle me-2"></i>
+
     <span th:text="${msg}"></span>
+
     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
   </div>
 
