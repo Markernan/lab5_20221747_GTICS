@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/base :: head}">
+    <title>Enviar Mensaje - Jardín de la Esperanza</title>
+</head>
+<body>
+<nav th:replace="~{fragments/base :: navbar}"></nav>
+
+<div class="container my-5" style="padding-top: 100px;">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header gradient-bg text-white text-center py-4">
+                    <h2 class="mb-0">
+                        <i class="fas fa-paper-plane me-2"></i>
+                        Enviar Mensaje Motivacional
+                    </h2>
+                    <p class="mb-0 mt-2">Comparte esperanza y amistad</p>
+                </div>
+
+                <div class="card-body p-5">
+                    <form th:action="@{/enviar}" th:object="${mensaje}" method="post">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    <i class="fas fa-user me-1"></i>Remitente
+                                </label>
+                                <div class="form-control d-flex align-items-center" style="background-color: #f8f9fa;">
+                                    <i class="fas fa-user-circle text-primary me-2"></i>
+                                    <strong th:text="${usuarioLogueado.nombre + ' ' + usuarioLogueado.apellido}">Usuario Logueado</strong>
+                                    <span class="text-muted ms-2" th:text="'(' + ${usuarioLogueado.correo} + ')'"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="receptorMensaje" class="form-label">
+                                    <i class="fas fa-user-friends me-1"></i>Destinatario
+                                </label>
+                                <select name="destinatarioId" class="form-select" id="receptorMensaje" required>
+                                    <option value="">Selecciona destinatario</option>
+                                    <option th:each="usuario : ${usuarios}"
+                                            th:value="${usuario.id}"
+                                            th:text="${usuario.nombre + ' ' + usuario.apellido}"
+                                            th:selected="${destinatarioSeleccionado != null && destinatarioSeleccionado.id == usuario.id}"
+                                            th:if="${usuario.id != usuarioLogueado.id}"></option>
+                                </select>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label">
+                                    <i class="fas fa-gift me-1"></i>Tipo de Regalo
+                                </label>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="form-check p-3 border rounded">
+                                            <input class="form-check-input" type="radio" name="tipoRegalo" value="Flor" id="regaloFlor" required>
+                                            <label class="form-check-label w-100" for="regaloFlor">
+                                                <div class="text-center">
+                                                    <i class="fas fa-seedling fa-3x text-warning mb-2"></i>
+                                                    <h5 class="mb-1">Flor Amarilla</h5>
+                                                    <p class="small text-muted mb-0">Símbolo de apoyo y ánimo</p>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check p-3 border rounded">
+                                            <input class="form-check-input" type="radio" name="tipoRegalo" value="Carrito" id="regaloCarrito" required>
+                                            <label class="form-check-label w-100" for="regaloCarrito">
+                                                <div class="text-center">
+                                                    <i class="fas fa-shopping-cart fa-3x text-info mb-2"></i>
+                                                    <h5 class="mb-1">Carrito de Color</h5>
+                                                    <p class="small text-muted mb-0">Símbolo de amistad</p>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12" id="seccionColores">
+                                <label for="colorCarrito" class="form-label">
+                                    <i class="fas fa-palette me-1"></i>Color del Carrito
+                                </label>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="colorCarrito" value="Rojo" id="rojo">
+                                        <label class="form-check-label badge rounded-pill p-2" for="rojo" style="background-color: #dc3545; color: white;">
+                                            Rojo
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="colorCarrito" value="Azul" id="azul">
+                                        <label class="form-check-label badge rounded-pill p-2" for="azul" style="background-color: #0d6efd; color: white;">
+                                            Azul
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="colorCarrito" value="Verde" id="verde">
+                                        <label class="form-check-label badge rounded-pill p-2" for="verde" style="background-color: #198754; color: white;">
+                                            Verde
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="colorCarrito" value="Naranja" id="naranja">
+                                        <label class="form-check-label badge rounded-pill p-2" for="naranja" style="background-color: #fd7e14; color: white;">
+                                            Naranja
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="colorCarrito" value="Morado" id="morado">
+                                        <label class="form-check-label badge rounded-pill p-2" for="morado" style="background-color: #6f42c1; color: white;">
+                                            Morado
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="textoMensaje" class="form-label">
+                                    <i class="fas fa-heart me-1"></i>Mensaje Motivacional
+                                </label>
+                                <textarea th:field="*{contenido}"
+                                          class="form-control" id="textoMensaje" rows="4"
+                                          th:classappend="${#fields.hasErrors('contenido')} ? 'is-invalid' : ''"
+                                          placeholder="Escribe tu mensaje motivacional (mínimo 20 caracteres, no debe contener 'odio' ni 'feo')"
+                                          maxlength="255"></textarea>
+                                <div th:if="${#fields.hasErrors('contenido')}" class="invalid-feedback">
+                                    <span th:errors="*{contenido}"></span>
+                                </div>
+                                <div class="form-text">
+                                    Máximo 255 caracteres
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-custom btn-lg py-3">
+                                <i class="fas fa-paper-plane me-2"></i>
+                                Enviar Mensaje
+                            </button>
+                            <a href="/" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>
+                                Volver al Inicio
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/base :: scripts}"></div>
+</body>
+</html>

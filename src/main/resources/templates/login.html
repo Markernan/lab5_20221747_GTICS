@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/base :: head}">
+    <title>Iniciar Sesión - Jardín de la Esperanza</title>
+</head>
+<body>
+<div class="hero-section">
+    <div class="container">
+        <div class="row justify-content-center align-items-center min-vh-100">
+            <div class="col-lg-5">
+                <div class="card shadow-lg border-0">
+                    <div class="card-header gradient-bg text-white text-center py-4">
+                        <h2 class="mb-0">
+                            <i class="fas fa-seedling me-2"></i>
+                            Jardín de la Esperanza
+                        </h2>
+                        <p class="mb-0 mt-2">Iniciar Sesión</p>
+                    </div>
+
+                    <div class="card-body p-5">
+                        <!-- Mensajes -->
+                        <div th:if="${msg}" class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="fas fa-check-circle me-2"></i>
+                            <span th:text="${msg}"></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+
+                        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-circle me-2"></i>
+                            <span th:text="${error}"></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+
+                        <form th:action="@{/login}" method="post">
+                            <div class="mb-4">
+                                <label for="emailUsuario" class="form-label">
+                                    <i class="fas fa-envelope me-1"></i>Correo Electrónico
+                                </label>
+                                <input type="email" name="correo" class="form-control form-control-lg" id="emailUsuario" required>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="claveAcceso" class="form-label">
+                                    <i class="fas fa-lock me-1"></i>Contraseña
+                                </label>
+                                <input type="password" name="contrasena" class="form-control form-control-lg" id="claveAcceso" required>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-custom btn-lg">
+                                    <i class="fas fa-sign-in-alt me-2"></i>
+                                    Iniciar Sesión
+                                </button>
+                            </div>
+                        </form>
+
+                        <hr class="my-4">
+
+                        <div class="text-center">
+                            <p class="mb-2">¿No tienes cuenta?</p>
+                            <a href="/registro" class="btn btn-outline-primary">
+                                <i class="fas fa-user-plus me-2"></i>
+                                Crear Cuenta Nueva
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/base :: scripts}"></div>
+</body>
+</html>

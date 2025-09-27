@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/base :: head}">
+  <title>Mensajes Recibidos - Jardín de la Esperanza</title>
+</head>
+<body>
+<nav th:replace="~{fragments/base :: navbar}"></nav>
+
+<div class="container my-5" style="padding-top: 100px;">
+  <div class="text-center mb-5">
+    <h1 class="display-4 fw-bold text-primary">
+      <i class="fas fa-inbox me-3"></i>
+      Mensajes Recibidos
+    </h1>
+    <div th:if="${usuario}">
+      <h3 class="text-muted mb-3" th:text="${usuario.nombre + ' ' + usuario.apellido}"></h3>
+      <div class="badge bg-success fs-5 px-4 py-2 rounded-pill mb-4">
+        <i class="fas fa-envelope me-2"></i>
+        <span th:text="${totalMensajes}"></span>
+        <span th:text="${totalMensajes == 1} ? ' mensaje recibido' : ' mensajes recibidos'"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div th:if="${#lists.isEmpty(mensajes)}" class="alert alert-info text-center">
+        <i class="fas fa-info-circle me-2"></i>
+        Este usuario no ha recibido mensajes aún
+      </div>
+
+      <div th:unless="${#lists.isEmpty(mensajes)}">
+        <div th:each="mensaje : ${mensajes}" class="card mb-4 shadow-sm card-hover border-0">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+              <i class="fas fa-user-circle fa-2x text-primary me-3"></i>
+              <div>
+                <h6 class="mb-0 fw-bold" th:text="${mensaje.remitente.nombre + ' ' + mensaje.remitente.apellido}"></h6>
+                <small class="text-muted" th:text="${mensaje.remitente.correo}"></small>
+              </div>
+            </div>
+            <div class="text-end">
+              <small class="text-muted"
+                     th:text="${#temporals.format(mensaje.fechaEnvio, 'dd/MM/yyyy HH:mm')}"></small>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="row align-items-center mb-3">
+              <div class="col-md-8">
+                <div th:if="${mensaje.regaloTipo.name() == 'Flor'}"
+                     class="d-flex align-items-center">
+                  <i class="fas fa-seedling fa-2x text-warning me-3"></i>
+                  <div>
+                    <h6 class="mb-0">Flor Amarilla</h6>
+                    <small class="text-muted">Símbolo de apoyo y ánimo</small>
+                  </div>
+                </div>
+
+                <div th:if="${mensaje.regaloTipo.name() == 'Carrito'}"
+                     class="d-flex align-items-center">
+                  <i class="fas fa-shopping-cart fa-2x me-3"
+                     th:style="'color: ' + ${mensaje.regaloColor?.toLowerCase()}"></i>
+                  <div>
+                    <h6 class="mb-0">Carrito <span th:text="${mensaje.regaloColor}"></span></h6>
+                    <small class="text-muted">Símbolo de amistad y buenos deseos</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 text-end">
+                                    <span th:if="${mensaje.regaloTipo.name() == 'Flor'}"
+
+                                          class="badge bg-warning text-dark fs-6 px-3 py-2 rounded-pill">
+                                        <i class="fas fa-seedling me-1"></i>
+
+                                        Regalo Recibido
+                                    </span>
+                <span th:if="${mensaje.regaloTipo.name() == 'Carrito'}"
+
+                      class="badge bg-info text-white fs-6 px-3 py-2 rounded-pill">
+                                        <i class="fas fa-shopping-cart me-1"></i>
+                                        Regalo Recibido
+                                    </span>
+              </div>
+            </div>
+
+            <div class="bg-light p-3 rounded">
+              <blockquote class="mb-0">
+                <p class="mb-0" th:text="${mensaje.contenido}"></p>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center mt-4">
+    <a href="/" class="btn btn-outline-primary btn-lg px-4 py-2 rounded-pill me-3">
+      <i class="fas fa-home me-2"></i>
+
+      Volver al Inicio
+    </a>
+    <a th:if="${usuario}" th:href="@{/enviar(destinatarioId=${usuario.id})}"
+       class="btn btn-custom btn-lg px-4 py-2 rounded-pill">
+      <i class="fas fa-reply me-2"></i>
+
+      Enviar Mensaje
+    </a>
+  </div>
+</div>
+
+<div th:replace="~{fragments/base :: scripts}"></div>
+</body>
+</html>
