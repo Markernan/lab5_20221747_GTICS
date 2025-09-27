@@ -1,6 +1,5 @@
 package com.example.lab5.Entity;
 
-import com.fasterxml.jackson.annotation.JsonTypeId;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
