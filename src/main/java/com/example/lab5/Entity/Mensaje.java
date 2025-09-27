@@ -57,7 +57,7 @@ public class Mensaje {
     public enum TipoRegalo {
 
         Flor, Carrito
-        
+
     }
 
     @PrePersist
